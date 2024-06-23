@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  nodeserver:
+    image: 10.1.20.119:8083/kurs-master
+    container_name: kurs-master
+    working_dir: /usr/src/app
+    build: .
+    restart: always
+    hostname: "kurs-master"
+    volumes:
+      - .:/usr/src/app
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3045:3000"
+    command: "npm start"
+      #healthcheck:
+      #test: ["CMD", "curl", "--fail", "http://localhost:3000/health"]
+      #interval: 30s
+      #timeout: 10s
+      #retries: 3
+
