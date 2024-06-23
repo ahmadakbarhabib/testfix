@@ -4,7 +4,7 @@ const axios = require("axios");
 const cheerio = require("cheerio");
 
 const app = express();
-const port = process.env.APP_PORT || 3000;
+const port = process.env.APP_PORT || 8080;
 const bankIndonesiaUrl =
   "https://www.bi.go.id/id/statistik/informasi-kurs/transaksi-bi/default.aspx";
 const kemenkeuUrl = "https://fiskal.kemenkeu.go.id/informasi-publik/kurs-pajak";
