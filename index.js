@@ -9,53 +9,6 @@ const bankIndonesiaUrl =
   "https://www.bi.go.id/id/statistik/informasi-kurs/transaksi-bi/default.aspx";
 const kemenkeuUrl = "https://fiskal.kemenkeu.go.id/informasi-publik/kurs-pajak";
 
-app.get("/", (req, res) => {
-  res.redirect("/exchange-rates");
-});
-
-app.get("/exchange-rates", async (req, res) => {
-  try {
-    const response = await axios.get(bankIndonesiaUrl);
-    const html = response.data;
-    const $ = cheerio.load(html);
-
-    // Find the table with class 'table1'
-    const table = $("table.table.table-striped.table-no-bordered.table-lg");
-
-    // Check if the table exists
-    if (table.length) {
-      const rates = [];
-
-      const rows = table.find("tr");
-      rows.each((index, row) => {
-        const columns = $(row).find("td");
-        const rowData = [];
-        columns.each((index, column) => {
-          rowData.push($(column).text().trim());
-        });
-
-        if (rowData.length > 0) {
-          const data = {
-            mataUang: rowData[0],
-            nilai: rowData[1],
-            kursJual: strToBD(rowData[2]),
-            kursBeli: strToBD(rowData[3]),
-          };
-          rates.push(data);
-        }
-      });
-
-      res.json(rates);
-    } else {
-      res.status(404).send("No exchange rates table found.");
-    }
-  } catch (error) {
-    res
-      .status(500)
-      .send("Error fetching the webpage content: " + error.message);
-  }
-});
-
 app.get("/kurs-pajak", async (req, res) => {
   try {
     const response = await axios.get(kemenkeuUrl);
