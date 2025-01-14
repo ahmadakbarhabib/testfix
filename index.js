@@ -10,7 +10,7 @@ const bankIndonesiaUrl =
 const kemenkeuUrl = "https://fiskal.kemenkeu.go.id/informasi-publik/kurs-pajak";
 
 app.get("/", (req, res) => {
-  res.redirect("/exchange-rates");
+  res.redirect("/kurs-pajak");
 });
 
 app.get("/exchange-rates", async (req, res) => {
